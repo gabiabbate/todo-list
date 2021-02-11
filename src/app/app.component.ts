@@ -11,9 +11,10 @@ export class AppComponent {
   public title: string = 'Minhas tarefas';
   
   constructor() {
-    this.todos.push();
-    this.todos.push();
-    
+    this.todos.push(new Todo(1, 'Passear com o cachorro', false));
+    this.todos.push(new Todo(2, 'Ir ao supermercado', true));
+    this.todos.push(new Todo(3, 'Cortar o cabelo', false));
+ 
   }
 
   alterarTexto() {
