@@ -13,7 +13,9 @@ export class AppComponent {
     this.todos.push('passear com cachorro');
     this.todos.push('ir ao supermercado');
     this.todos.push('cortar cabelo');
-
+    this.todos.push('aprender a pegar o ônibus no terminal');
+    this.todos.push('tentar usar um celular que não seja apple');
+    
   }
 
   alterarTexto() {
