@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Todo } from './models/todo.model';
-
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
@@ -23,6 +22,8 @@ export class AppComponent {
         Validators.required
       ])]
     });
+
+    this.loadData();
   }
 
   //para remover um item é preciso fazer splice
@@ -47,7 +48,6 @@ export class AppComponent {
     this.saveData();
   }
 
-
   add() {
 
     //pode ser feito pra ter uma json
@@ -67,6 +67,7 @@ export class AppComponent {
     const data = JSON.stringify(this.todos);
     localStorage.setItem('todos', data);
   }
+
   loadData() {
     const data = localStorage.getItem('todos');
     this.todos = JSON.parse(data);
