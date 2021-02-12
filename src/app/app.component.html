@@ -1,9 +1,11 @@
 <h1>{{ title }}</h1>
 <ul>
-  <li *ngFor="let itemLista of listaDeTarefas">{{ itemLista.id }} - {{ itemLista.title}} - {{itemLista.done}} |
-     <button *ngIf="itemLista.done" (click)="markAsUndone(itemLista)">Refazer</button> | 
-     <button *ngIf="!itemLista.done" (click)="markAsDone(itemLista)">Concluir</button> |
-     <button (click)="remove(itemLista)">Remover</button> </li>
+<p *ngIf="todos.length==0"><small>Você ainda não tem tarefas hoje</small></p>
+  
+  <li *ngFor="let todo of todos">{{ todo.id }} - {{ todo.title}} - {{todo.done}} |
+     <button *ngIf="todo.done" (click)="markAsUndone(todo)">Refazer</button> | 
+     <button *ngIf="!todo.done" (click)="markAsDone(todo)">Concluir</button> |
+     <button (click)="remove(todo)">Remover</button> </li>
 </ul>
 
 <form [formGroup]="form">
@@ -11,7 +13,7 @@
     <label>Tarefa: </label>
     <input type="text" placeholder="Titulo da tarefa" maxlength="60" formControlName="title">
     <small *ngIf="form.controls.title.invalid && !form.controls.title.pristine">Esse campo deve ter entre 3 e 60 caracteres</small>
-    <button>Adicionar</button>
+    <button [disabled]="form.invalid" (click)="add()">Adicionar</button>
   </fieldset>
 
 </form>
