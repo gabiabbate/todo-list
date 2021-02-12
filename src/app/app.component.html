@@ -6,3 +6,15 @@
      <button (click)="remove(itemLista)">Remover</button> </li>
 </ul>
 
+<form [formGroup]="form">
+  <fieldset>
+    <label>Tarefa:</label>
+    <input type="text"
+      placeholder="Titulo da tarefa"
+      maxlength="60"
+      formControlName="title">
+      <button>Adicionar</button>
+  </fieldset>
+  
+</form>
+

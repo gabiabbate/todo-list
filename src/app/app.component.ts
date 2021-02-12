@@ -1,16 +1,29 @@
 import { Component } from '@angular/core';
 import { Todo } from './models/todo.model';
 
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
+
 export class AppComponent {
   public listaDeTarefas: Todo[] = [];
   public title: String = 'Minhas tarefas';
+  public form: FormGroup;
 
-  constructor() {
+  constructor(private fb : FormBuilder) {
+    
+    this.form = this.fb.group({
+      title : ['', Validators.compose([
+        Validators.minLength(3),
+        Validators.maxLength(60),
+        Validators.required
+      ])]
+    });
+    
     this.listaDeTarefas.push(new Todo(1, 'Passear com o cachorro', false));
     this.listaDeTarefas.push(new Todo(2, 'Ir ao supermercado', true));
     this.listaDeTarefas.push(new Todo(3, 'Cortar o cabelo', false));
