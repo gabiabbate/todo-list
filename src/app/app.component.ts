@@ -7,69 +7,69 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-
 export class AppComponent {
   public todos: Todo[] = [];
-  public title: String = 'Minhas tarefas';
   public form: FormGroup;
+  public mode: String = 'list';
 
   constructor(private fb: FormBuilder) {
-    
     this.form = this.fb.group({
       title: ['', Validators.compose([
         Validators.minLength(3),
         Validators.maxLength(60),
-        Validators.required
+        Validators.required,
       ])]
     });
 
-    this.loadData();
+    this.load();
   }
 
-  //para remover um item é preciso fazer splice
-  ///então vamos receber o índice do item de todo
-  remove(item: Todo) {
-    const index = this.todos.indexOf(item);
-    if (index !== -1) {
-      // verifica se o todo está na lista, se for !== -1 está na lista, ai pode remover
-      this.todos.splice(index, 1);
-      //pega o item que vai ser removido e diz quantos itens precisa remover
-      this.saveData();
-    }
-  }
-
-  markAsDone(todo: Todo) {
-    todo.done = true;
-    this.saveData();
-  }
-
-  markAsUndone(todo: Todo) {
-    todo.done = false;
-    this.saveData();
+  changeMode(mode: String) {
+    this.mode = mode;
   }
 
   add() {
-
-    //pode ser feito pra ter uma json
-    //  this.form.value => {title : 'Titulo}
     const title = this.form.controls['title'].value;
     const id = this.todos.length + 1;
     this.todos.push(new Todo(id, title, false));
-    this.saveData();
+    this.save();
     this.clear();
+    this.changeMode('list');
   }
 
   clear() {
     this.form.reset();
   }
-  
-  saveData() {
+
+  remove(todo: Todo) {
+    const index = this.todos.indexOf(todo);
+    if (index !== -1) {
+      this.todos.splice(index, 1);
+    }
+    this.save();
+  }
+
+  markAsDone(todo: Todo) {
+    todo.done = true;
+    this.save();
+  }
+
+  markAsUndone(todo: Todo) {
+    todo.done = false;
+    this.save();
+  }
+
+  save() {
     const data = JSON.stringify(this.todos);
     localStorage.setItem('todos', data);
   }
 
-  loadData() {
+  load() {
     const data = localStorage.getItem('todos');
-    this.todos = JSON.parse(data);
+    if (data) {
+      this.todos = JSON.parse(data);
+    } else {
+      this.todos = [];
+    }
   }
 }
